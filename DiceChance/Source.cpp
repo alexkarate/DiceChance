@@ -4,7 +4,8 @@
 #include "DiceChance.h"
 using namespace std;
 using namespace Dice;
-// Returns the number of digits in a number
+
+// Returns the number of digits
 int GetNumberOfDigits(int a) {
 	int k = 0;
 	while (a > 0) {
@@ -13,7 +14,7 @@ int GetNumberOfDigits(int a) {
 	return k;
 }
 
-// Удаляет из начала и конца строки знаки пробелов и табуляции
+// Deletes spaces from the front and the back of the string
 void CleanString(std::string &s) {
 	int n = 0;
 	while (n < s.length() && (s[n] == ' ' || s[n] == '\t')) n++;
@@ -22,7 +23,7 @@ void CleanString(std::string &s) {
 	while (n >= 0 && (s[n] == ' ' || s[n] == '\t')) n--;
 	s.erase(n + 1);
 }
-// Возвращает stoi(s) или defaultNum
+// Returns stoi(s) or defaultNum
 int SafeStoi(std::string &s, int defaultNum) {
 	int result;
 	try {
@@ -34,12 +35,12 @@ int SafeStoi(std::string &s, int defaultNum) {
 	return result;
 }
 
-// Является ли данный символ цифрой
-bool isNum(char a) {
+// Returns true if the character is a digit
+bool isDigit(char a) {
 	return a >= '0' && a <= '9';
 }
 
-// Находит и возвращает тип вывода шанса, если таковой есть
+// Returns the type of comparison that is used and the number to compare to
 Dice::VsType GetType(string &s, int &vsNum) {
 	VsType vsType = NoVs;
 	vsNum = s.find('=');
@@ -60,30 +61,30 @@ Dice::VsType GetType(string &s, int &vsNum) {
 	return vsType;
 }
 
-// Возвращает количество кубиков в выражении или -1, если их нет
+// Returns the number of cubes in an expression or -1 if none
 int GetCubes(string &s, int dPos) {
 	string cubeStr = s.substr(0, dPos);
 	CleanString(cubeStr);
 	return SafeStoi(cubeStr, -1);
 }
 
-// Возвращает количество сторон в выражении или -1, если их нет
+// Returns the number of sides in an expression or -1 if none
 int GetSides(string &s, int dPos) {
 	int n = 0;
-	while (s[dPos + n + 1] == ' ' || isNum(s[dPos + n + 1])) n++;
+	while (s[dPos + n + 1] == ' ' || isDigit(s[dPos + n + 1])) n++;
 	string sideStr = s.substr(dPos + 1, n);
 	CleanString(sideStr);
 	return SafeStoi(sideStr, -1);
 }
 
-// Возвращает модификатор или 0, если его нет
+// Returns the addition (or subtraction) in an expression, or 0 if none
 int GetPlus(string &s) {
 	int op = s.find('+');
 	if (op == -1) op = s.find('-');
 	if (op == -1) return 0;
 
 	int n = 1;
-	while (s[op + n] == ' ' || isNum(s[op + n])) n++;
+	while (s[op + n] == ' ' || isDigit(s[op + n])) n++;
 	string opStr = s.substr(op, n);
 	CleanString(opStr);
 	return SafeStoi(opStr, 0);

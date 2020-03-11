@@ -1,6 +1,7 @@
 #include "DiceChance.h"
 namespace Dice {
-	// ¬озвращает массив, в котором записано количество возможных совпадений.
+	// Returns a match array, an array, where each position corresponds to the number of possible dice throws, 
+	// the result of which equals to that position.
 	int* GetValueSpread(int cubes, int sides, int &N) {
 		if (cubes < 1 || sides < 1) return nullptr;
 
@@ -26,14 +27,14 @@ namespace Dice {
 		return result;
 	}
 
-	// ¬озвращает общее количество совпадений
+	// Returns the number of matches
 	double GetTotal(int *a, int N) {
 		double total = 0;
 		for (int i = 0; i < N; i++) total += a[i];
 		return total;
 	}
 
-	// ¬озвращает массив шансов по заданному массиву совпадений
+	// Returns a chance array, given a match array
 	double* GetChanceArray(int *a, int N) {
 		double total = GetTotal(a, N);
 		double* chance = new double[N];
@@ -42,7 +43,7 @@ namespace Dice {
 		return chance;
 	}
 
-	// ¬озвращает шанс по заданному массиву совпадений и типу
+	// Returns the chance, given a match array, the type of comparison and a number to compare to
 	double GetChance(int *a, int N, int vsNum, VsType type) {
 		double total = GetTotal(a, N);
 		double chance = 0;
@@ -62,7 +63,7 @@ namespace Dice {
 		return 0;
 	}
 
-	// —кладывает два массива совпадений и возвращает результат
+	// Adds two match arrays, the result is a match array
 	int* AddArray(int *a, int Na, int *b, int Nb, int& N) {
 		N = Na + Nb - 1;
 		int *c = new int[N];
@@ -74,7 +75,7 @@ namespace Dice {
 		return c;
 	}
 
-	// —мещает массив на plus. ѕри смещении элемент с индексом 0 хранит в себе все элементы, индекс которых меньше 0
+	// Shifts the array to the right (or left) by 'plus'. Values with position less than 0 are kept in 0
 	void AdjustArray(int *&a, int &N, int plus) {
 		if (plus == 0) return;
 		int *b, Nb = N;
