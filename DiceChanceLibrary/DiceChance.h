@@ -1,23 +1,24 @@
 #pragma once
 namespace Dice{
-	enum VsType {
-		NoVs, GreaterThan, LessThan, Equals
+	enum VersusType {
+		NoVersus, GreaterThan, LessThan, Equals
 	};
-	// ¬озвращает массив, в котором записано количество возможных совпадений.
-	int* GetValueSpread(int cubes, int sides, int &N);
+	// Returns a match array, or an array, where each position corresponds to the number of possible dice throws, 
+	// the result of which equals to that position.
+	int* GetValueSpread(int cubes, int sides, int &NResult);
 
-	// ¬озвращает общее количество совпадений
-	double GetTotal(int *a, int N);
+	// Returns the number of all matches
+	double GetTotal(int *matchArray, int N);
 
-	// ¬озвращает массив шансов по заданному массиву совпадений
-	double* GetChanceArray(int *a, int N);
+	// Returns a chance array, given a match array
+	double* GetChanceArray(int *matchArray, int N);
 
-	// ¬озвращает шанс по заданному массиву совпадений и типу
-	double GetChance(int *a, int N, int vsNum, VsType type);
+	// Returns the chance, given a match array, the type of comparison and a number to compare to
+	double GetChance(int *matchArray, int N, int vsNum, VersusType type);
 
-	// —кладывает два массива совпадений и возвращает результат
-	int* AddArray(int *a, int Na, int *b, int Nb, int& N);
+	// Adds two match arrays, the result is a match array
+	int* AddArray(int *matchArrayA, int Na, int *matchArrayB, int Nb, int& NResult);
 
-	// —мещает массив на plus. ѕри смещении элемент с индексом 0 хранит в себе все элементы, индекс которых меньше 0
-	void AdjustArray(int *&a, int &N, int plus);
+	// Shifts the array to the right (or left) by 'plus'. Values with position less than 0 are kept in 0
+	void AdjustArray(int *&matchArray, int &N, int plus);
 }
